@@ -17,15 +17,50 @@ import 'package:vector_graphics/vector_graphics.dart' as _vg;
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
+  /// File path: assets/icons/ic_home_focus.svg
+  SvgGenImage get icHomeFocus =>
+      const SvgGenImage('assets/icons/ic_home_focus.svg');
+
+  /// File path: assets/icons/ic_home_unfocus.svg
+  SvgGenImage get icHomeUnfocus =>
+      const SvgGenImage('assets/icons/ic_home_unfocus.svg');
+
+  /// File path: assets/icons/ic_profile_focus.svg
+  SvgGenImage get icProfileFocus =>
+      const SvgGenImage('assets/icons/ic_profile_focus.svg');
+
+  /// File path: assets/icons/ic_profile_unfocus.svg
+  SvgGenImage get icProfileUnfocus =>
+      const SvgGenImage('assets/icons/ic_profile_unfocus.svg');
+
   /// File path: assets/icons/ic_register.svg
   SvgGenImage get icRegister =>
       const SvgGenImage('assets/icons/ic_register.svg');
 
+  /// File path: assets/icons/ic_show.svg
+  SvgGenImage get icShow => const SvgGenImage('assets/icons/ic_show.svg');
+
+  /// File path: assets/icons/ic_signin.svg
+  SvgGenImage get icSignin => const SvgGenImage('assets/icons/ic_signin.svg');
+
   /// File path: assets/icons/ic_success.svg
   SvgGenImage get icSuccess => const SvgGenImage('assets/icons/ic_success.svg');
 
+  /// File path: assets/icons/ic_unshow.svg
+  SvgGenImage get icUnshow => const SvgGenImage('assets/icons/ic_unshow.svg');
+
   /// List of all assets
-  List<SvgGenImage> get values => [icRegister, icSuccess];
+  List<SvgGenImage> get values => [
+    icHomeFocus,
+    icHomeUnfocus,
+    icProfileFocus,
+    icProfileUnfocus,
+    icRegister,
+    icShow,
+    icSignin,
+    icSuccess,
+    icUnshow,
+  ];
 }
 
 class $AssetsLottieGen {
