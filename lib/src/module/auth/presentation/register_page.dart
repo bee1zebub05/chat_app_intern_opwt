@@ -13,7 +13,6 @@ import 'package:chat_app/src/module/auth/cubit/register_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:lottie/lottie.dart';
 
 @RoutePage()
 class RegisterPage extends StatefulWidget {
@@ -27,6 +26,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController? userController = TextEditingController();
   final TextEditingController? passController = TextEditingController();
   final TextEditingController? rePassController = TextEditingController();
+  bool showPassword = true;
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -42,31 +42,31 @@ class _RegisterPageState extends State<RegisterPage> {
               showDialog(
                 context: context,
                 barrierDismissible: false,
-                builder: (_) => Center(
-                  child: Padding(
-                    padding:  EdgeInsets.all(UIConst.defaultPadding),
-                    child: Container(
-                      height: 400.h,
-                      decoration: BoxDecoration(
-                        color: ColorName.grayBackground,
-                        borderRadius: BorderRadius.circular(UIConst.defaultBorderRadius/10)
-                      ),
-                      child: Center(
-                        child:Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            spacing: 4.h,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Assets.icons.icSuccess.svg(height: 100.h),
-                              Expanded(child: AppText('Register successfully !! Navigate to Login', fontWeight: FontWeight.bold,))
-                            ],
-                          ),
-                        
-                      ),
+                builder: (_) => AlertDialog(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(
+                      UIConst.defaultBorderRadius,
                     ),
                   ),
-                )
+                  backgroundColor: ColorName.grayBackground,
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Assets.icons.icSuccess.svg(height: 80.h),
+                      SizedBox(height: 16.h),
+                      AppText(
+                        'Register successfully!',
+                        fontWeight: FontWeight.bold,
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: 8.h),
+                      AppText('Navigate to Login', textAlign: TextAlign.center),
+                    ],
+                  ),
+                  actionsAlignment: MainAxisAlignment.center,
+                ),
               );
+              ;
               await Future.delayed(const Duration(seconds: 3));
               context.router.push(SignInRoute());
             },
@@ -90,48 +90,54 @@ class _RegisterPageState extends State<RegisterPage> {
                     children: [
                       Spacer(flex: 3),
                       Assets.icons.icRegister.svg(height: 100.h),
-                      AppText('Register', fontWeight: FontWeight.bold, fontSize: UIConst.defaultFontSize*3,),
+                      AppText(
+                        'Register',
+                        fontWeight: FontWeight.bold,
+                        fontSize: UIConst.defaultFontSize * 3,
+                      ),
                       Spacer(flex: 1),
-                      SizedBox(
-                        height: 50.h,
-                        child: AppTextField(
-                          controller: userController,
-                          borderRadius: BorderRadius.circular(
-                            UIConst.defaultBorderRadius / 10,
-                          ),
-                          hintText: 'Username, email or mobile number',
-                          onChanged: (_) =>
-                              context.read<RegisterCubit>().validation(
-                                passController!.text,
-                                rePassController!.text,
-                              ),
-                        ),
+                      _UsernameField(
+                        controller: userController,
+                        passController: passController,
+                        rePassController: rePassController,
                       ),
-                      SizedBox(
-                        height: 50.h,
-                        child: AppTextField(
-                          controller: passController,
-                          borderRadius: BorderRadius.circular(
-                            UIConst.defaultBorderRadius / 10,
-                          ),
-                          hintText: 'Password',
-                        ),
+                      _PasswordField(
+                        controller: passController,
+                        showPassword: showPassword,
+                        onToggle: () => setState(() {
+                          showPassword = !showPassword;
+                        }),
+                        rePassController: rePassController,
                       ),
-                      SizedBox(
-                        height: 50.h,
-                        child: AppTextField(
-                          controller: rePassController,
-                          borderRadius: BorderRadius.circular(
-                            UIConst.defaultBorderRadius / 10,
-                          ),
-                          hintText: 'Enter password again',
-                          onChanged: (_) =>
-                              context.read<RegisterCubit>().validation(
-                                passController!.text,
-                                rePassController!.text,
-                              ),
-                        ),
+                      _RePasswordField(
+                        controller: rePassController,
+                        passController: passController,
+                        showPassword: showPassword,
+                        onToggle: () => setState(() {
+                          showPassword = !showPassword;
+                        }),
                       ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        spacing: 5.w,
+                        children: [
+                          AppText(
+                            "Already have an account ?",
+                            fontSize: 12.sp,
+                            textColor: ColorName.grayText,
+                          ),
+                          AppText(
+                            "Sign In",
+                            fontSize: 12.sp,
+                            textColor: ColorName.greenFile,
+                            ignorePointer: false,
+                            onTap: () {
+                              context.router.replace(SignInRoute());
+                            },
+                          ),
+                        ],
+                      ),
+
                       AppButton(
                         isButtonDisabled: !isValid,
                         style: AppButtonStyle(
@@ -152,6 +158,110 @@ class _RegisterPageState extends State<RegisterPage> {
             );
           },
         ),
+      ),
+    );
+  }
+}
+
+class _UsernameField extends StatelessWidget {
+  final TextEditingController? controller;
+  final TextEditingController? passController;
+  final TextEditingController? rePassController;
+
+  const _UsernameField({
+    this.controller,
+    this.passController,
+    this.rePassController,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 50.h,
+      child: AppTextField(
+        controller: controller,
+        borderRadius: BorderRadius.circular(UIConst.defaultBorderRadius / 10),
+        hintText: 'Username, email or mobile number',
+        onChanged: (_) => context.read<RegisterCubit>().validation(
+              passController!.text,
+              rePassController!.text,
+            ),
+      ),
+    );
+  }
+}
+
+class _PasswordField extends StatelessWidget {
+  final TextEditingController? controller;
+  final TextEditingController? rePassController;
+  final bool showPassword;
+  final VoidCallback onToggle;
+
+  const _PasswordField({
+    this.controller,
+    this.rePassController,
+    required this.showPassword,
+    required this.onToggle,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 50.h,
+      child: AppTextField(
+        controller: controller,
+        borderRadius: BorderRadius.circular(UIConst.defaultBorderRadius / 10),
+        hintText: 'Password',
+        obscureText: showPassword,
+        onSuffixPressed: onToggle,
+        suffix: Padding(
+          padding: EdgeInsets.only(right: 12.w),
+          child: showPassword
+              ? Assets.icons.icShow.svg(height: 25.h)
+              : Assets.icons.icUnshow.svg(height: 25.h),
+        ),
+        onChanged: (_) => context.read<RegisterCubit>().validation(
+              controller!.text,
+              rePassController!.text,
+            ),
+      ),
+    );
+  }
+}
+
+class _RePasswordField extends StatelessWidget {
+  final TextEditingController? controller;
+  final TextEditingController? passController;
+  final bool showPassword;
+  final VoidCallback onToggle;
+
+  const _RePasswordField({
+    this.controller,
+    this.passController,
+    required this.showPassword,
+    required this.onToggle,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 50.h,
+      child: AppTextField(
+        controller: controller,
+        borderRadius: BorderRadius.circular(UIConst.defaultBorderRadius / 10),
+        hintText: 'Enter password again',
+        obscureText: showPassword,
+        onSuffixPressed: onToggle,
+        suffix: Padding(
+          padding: EdgeInsets.only(right: 12.w),
+          child: showPassword
+              ? Assets.icons.icShow.svg(height: 25.h)
+              : Assets.icons.icUnshow.svg(height: 25.h),
+        ),
+        onChanged: (_) => context.read<RegisterCubit>().validation(
+              passController!.text,
+              controller!.text,
+            ),
       ),
     );
   }
