@@ -13,11 +13,19 @@ import 'package:chat_app/src/common/theme/default_text_theme.dart' as _i183;
 import 'package:chat_app/src/common/utils/logger.dart' as _i236;
 import 'package:chat_app/src/module/app/app_router.dart' as _i824;
 import 'package:chat_app/src/module/app/splash_page.dart' as _i537;
-import 'package:chat_app/src/module/auth/cubit/register_cubit.dart' as _i934;
-import 'package:chat_app/src/module/auth/cubit/sign_in_cubit.dart' as _i1018;
-import 'package:chat_app/src/module/auth/repository/auth_repository.dart'
-    as _i934;
-import 'package:chat_app/src/module/auth/service/auth_service.dart' as _i561;
+import 'package:chat_app/src/module/authentiaction/cubit/register_cubit.dart'
+    as _i235;
+import 'package:chat_app/src/module/authentiaction/cubit/sign_in_cubit.dart'
+    as _i520;
+import 'package:chat_app/src/module/authentiaction/repository/auth_repository.dart'
+    as _i718;
+import 'package:chat_app/src/module/authentiaction/service/auth_service.dart'
+    as _i122;
+import 'package:chat_app/src/module/setting/cubit/setting_cubit.dart' as _i1063;
+import 'package:chat_app/src/module/setting/repository/setting_repository.dart'
+    as _i701;
+import 'package:chat_app/src/module/setting/service/setting_service.dart'
+    as _i132;
 import 'package:chat_app/src/module/tabbar/application/tabbar_cubit.dart'
     as _i1035;
 import 'package:firebase_auth/firebase_auth.dart' as _i59;
@@ -41,17 +49,26 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i1035.TabCubit>(() => _i1035.TabCubit());
     gh.lazySingleton<_i59.FirebaseAuth>(() => firebaseModule.firebaseAuth);
     gh.factory<_i537.SplashPage>(() => _i537.SplashPage(key: gh<_i409.Key>()));
-    gh.factory<_i561.AuthService>(
-      () => _i561.AuthService(gh<_i59.FirebaseAuth>()),
+    gh.factory<_i132.SettingService>(
+      () => _i132.SettingService(gh<_i59.FirebaseAuth>()),
     );
-    gh.factory<_i934.AuthRepository>(
-      () => _i934.AuthRepository(gh<_i561.AuthService>()),
+    gh.factory<_i122.AuthService>(
+      () => _i122.AuthService(gh<_i59.FirebaseAuth>()),
     );
-    gh.factory<_i934.RegisterCubit>(
-      () => _i934.RegisterCubit(gh<_i934.AuthRepository>()),
+    gh.factory<_i701.SettingRepository>(
+      () => _i701.SettingRepository(gh<_i132.SettingService>()),
     );
-    gh.factory<_i1018.SignInCubit>(
-      () => _i1018.SignInCubit(gh<_i934.AuthRepository>()),
+    gh.factory<_i1063.SettingCubit>(
+      () => _i1063.SettingCubit(gh<_i701.SettingRepository>()),
+    );
+    gh.factory<_i718.AuthRepository>(
+      () => _i718.AuthRepository(gh<_i122.AuthService>()),
+    );
+    gh.factory<_i235.RegisterCubit>(
+      () => _i235.RegisterCubit(gh<_i718.AuthRepository>()),
+    );
+    gh.factory<_i520.SignInCubit>(
+      () => _i520.SignInCubit(gh<_i718.AuthRepository>()),
     );
     return this;
   }
@@ -59,4 +76,4 @@ extension GetItInjectableX on _i174.GetIt {
 
 class _$LoggerModule extends _i236.LoggerModule {}
 
-class _$FirebaseModule extends _i561.FirebaseModule {}
+class _$FirebaseModule extends _i122.FirebaseModule {}

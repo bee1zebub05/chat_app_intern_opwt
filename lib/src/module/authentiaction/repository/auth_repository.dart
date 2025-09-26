@@ -1,4 +1,4 @@
-import 'package:chat_app/src/module/auth/service/auth_service.dart';
+import 'package:chat_app/src/module/authentiaction/service/auth_service.dart';
 
 import 'package:injectable/injectable.dart';
 

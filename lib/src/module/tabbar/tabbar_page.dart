@@ -19,8 +19,10 @@ class TabbarPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => getIt<TabCubit>(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => getIt<TabCubit>()),
+      ],
       child: BlocBuilder<TabCubit, TabState>(
         builder: (context, state) {
           return Scaffold(
