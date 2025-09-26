@@ -9,7 +9,7 @@ import 'package:chat_app/src/common/widget/app_scaffold.dart';
 import 'package:chat_app/src/common/widget/app_text.dart';
 import 'package:chat_app/src/common/widget/app_textfield.dart';
 import 'package:chat_app/src/module/app/app_router.dart';
-import 'package:chat_app/src/module/auth/cubit/register_cubit.dart';
+import 'package:chat_app/src/module/authentiaction/cubit/register_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

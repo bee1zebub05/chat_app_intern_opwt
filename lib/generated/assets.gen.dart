@@ -17,6 +17,10 @@ import 'package:vector_graphics/vector_graphics.dart' as _vg;
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
+  /// File path: assets/icons/ic_default_avatar.svg
+  SvgGenImage get icDefaultAvatar =>
+      const SvgGenImage('assets/icons/ic_default_avatar.svg');
+
   /// File path: assets/icons/ic_home_focus.svg
   SvgGenImage get icHomeFocus =>
       const SvgGenImage('assets/icons/ic_home_focus.svg');
@@ -43,6 +47,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/ic_signin.svg
   SvgGenImage get icSignin => const SvgGenImage('assets/icons/ic_signin.svg');
 
+  /// File path: assets/icons/ic_signout.svg
+  SvgGenImage get icSignout => const SvgGenImage('assets/icons/ic_signout.svg');
+
   /// File path: assets/icons/ic_success.svg
   SvgGenImage get icSuccess => const SvgGenImage('assets/icons/ic_success.svg');
 
@@ -51,6 +58,7 @@ class $AssetsIconsGen {
 
   /// List of all assets
   List<SvgGenImage> get values => [
+    icDefaultAvatar,
     icHomeFocus,
     icHomeUnfocus,
     icProfileFocus,
@@ -58,6 +66,7 @@ class $AssetsIconsGen {
     icRegister,
     icShow,
     icSignin,
+    icSignout,
     icSuccess,
     icUnshow,
   ];
